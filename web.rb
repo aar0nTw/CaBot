@@ -103,26 +103,9 @@ post '/callback' do
           stock_id = twstock_msg_segment[1]
           image_url = "https://ichart.yahoo.com/t?s=#{stock_id}"
           message = {
-            type: "imagemap",
-            baseUrl: image_url,
-            altText: "#{stock_id}: https://finance.yahoo.com/quote/#{stock_id}",
-            baseSize: {
-              height: 95,
-              width: 190
-            },
-            actions: [
-              {
-                type: "uri",
-                linkUri: "https://finance.yahoo.com/quote/#{stock_id}",
-                area: {
-                  x: 0,
-                  y: 0,
-                  width: 195,
-                  height: 90
-                }
-              }
-            ]
-
+            type: "image",
+            originalContentUrl: image_url,
+            previewContentUrl: image_url,
           }
         end
 
