@@ -152,9 +152,13 @@ post '/callback' do
               originalContentUrl: "https://#{cover_uri.host + cover_uri.path}",
               previewImageUrl: "https://#{cover_uri.host + cover_uri.path}"
             }
+            actor = ""
+            if !dmm_result[:actresses].nil?
+              actor = dmm_result[:actresses].join(',')
+            end
             rich_message = {
               type: :text,
-              text: "#{dmm_result[:title]}: #{dmm_result[:actresses].join(',')}"
+              text: "#{dmm_result[:title]}: #{actor}"
             }
           end
         end
