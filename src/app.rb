@@ -3,6 +3,7 @@ require 'sinatra/logger'
 require 'line/bot'
 require 'net/http'
 require 'json'
+require 'opendmm'
 
 def client
   @client ||= Line::Bot::Client.new { |config|
@@ -54,10 +55,12 @@ post '/callback' do
       case event.type
       when Line::Bot::Event::MessageType::Text
         receive_message = event.message['text'].downcase
-        nba_msg_segment = receive_message.split('nba player ')
-        twstock_msg_segment = receive_message.split('stock ')
-        cmd_nba_flag = nba_msg_segment.length > 1
-        cmd_stock_flag = twstock_msg_segment.length > 1
+        nba_msg_segment = receive_message.split('/nba player ')
+        twstock_msg_segment = receive_message.split('/stock ')
+        jav_msg_segment = receive_message.split('/stock ')
+        cmd_nba_flag = (receive_message =~ /^\/nba\splayer\s[\w\W]+/) != nil
+        cmd_stock_flag = (receive_message =~ /^\/stock\s[\w\W]+/) != nil
+        cmd_jav_flag = (receive_message =~ /^\/av\s[\w\W]+/) != nil
         if cmd_nba_flag
           puts 'Confirm'
           player_name = nba_msg_segment[1].gsub(/[^a-zA-Z0-9\-_]+/, '_').downcase
@@ -103,7 +106,7 @@ post '/callback' do
           stock_id = twstock_msg_segment[1]
           image_url = URI.escape("https://ichart.yahoo.com/t?s=#{stock_id}")
           message = {
-            type: "image",
+            type: :image,
             originalContentUrl: image_url,
             previewImageUrl: image_url,
           }
@@ -123,6 +126,20 @@ post '/callback' do
               }]
             }
           }
+        end
+
+        if cmd_jav_flag
+          key_word = jav_msg_segment[1]
+          dmm_result = OpenDMM.search key_word
+          if dmm_result
+            puts dmm_result
+            cover_uri = URI(dmm_result[:cover_image])
+            message = {
+              type: :image,
+              originalContentUrl: "https://images.weserv.nl/?url=#{cover_uri.host + cover_uri.path}",
+              previewImageUrl: "https://images.weserv.nl/?url=#{cover_uri.host + cover_uri.path}"
+            }
+          end
         end
 
         messages = []
