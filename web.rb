@@ -132,10 +132,12 @@ post '/callback' do
         if rich_message
           messages << rich_message
         end
-        puts "Handle message: #{messages}, #{messages.length}"
-        puts event['replyToken']
-        response = client.reply_message(event['replyToken'], messages)
-        puts "req reply resp: #{response.body}"
+        if messages.length > 0
+          puts "Handle message: #{messages}, #{messages.length}"
+          puts event['replyToken']
+          response = client.reply_message(event['replyToken'], messages)
+          puts "req reply resp: #{response.body}"
+        end
       end
     end
   end
