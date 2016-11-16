@@ -105,6 +105,7 @@ post '/callback' do
           message = {
             type: "imagemap",
             baseUrl: image_url,
+            altText: "#{stock_id}: https://finance.yahoo.com/quote/#{stock_id}",
             baseSize: {
               height: 95,
               width: 190
