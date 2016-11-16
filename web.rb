@@ -54,7 +54,7 @@ post '/callback' do
         receive_message = event.message['text']
 
         nba_msg_segment = receive_message.split('nba player ')
-        twstock_msg_segment = receive_message.split('twstock ')
+        twstock_msg_segment = receive_message.split('stock ')
         cmd_nba_flag = nba_msg_segment.length > 1
         cmd_stock_flag = twstock_msg_segment
         if cmd_nba_flag
@@ -96,6 +96,33 @@ post '/callback' do
                 text: "沒找到 #{player_name}"
               }
           end
+
+          if cmd_stock_flag
+            stock_id = nba_msg_segment[1]
+            image_url = "https://ichart.yahoo.com/t?s=#{stock_id}"
+            message = {
+              type: "imagemap",
+              baseUrl: image_url,
+              baseSize: {
+                height: 95,
+                width: 190
+              },
+              actions: [
+                {
+                  type: "uri",
+                  linkUri: "https://finance.yahoo.com/quote/#{stock_id}",
+                  area: {
+                    x: 0,
+                    y: 0,
+                    width: 195,
+                    height: 90
+                  }
+                }
+              ]
+
+            }
+          end
+
           puts event['replyToken']
           response = client.reply_message(event['replyToken'], message)
           puts response.body
