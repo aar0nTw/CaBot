@@ -101,12 +101,13 @@ post '/callback' do
 
         if cmd_stock_flag
           stock_id = twstock_msg_segment[1]
-          image_url = "https://ichart.yahoo.com/t?s=#{stock_id}"
+          image_url = URI.escape("https://ichart.yahoo.com/t?s=#{stock_id}")
           message = {
             type: "image",
             originalContentUrl: image_url,
             previewImageUrl: image_url,
           }
+          puts "imageurl = #{image_url}"
         end
 
         if message
