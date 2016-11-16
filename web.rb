@@ -105,7 +105,7 @@ post '/callback' do
           message = {
             type: "image",
             originalContentUrl: image_url,
-            previewContentUrl: image_url,
+            previewImageUrl: image_url,
           }
         end
 
