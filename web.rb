@@ -9,6 +9,10 @@ def client
   }
 end
 
+configure do
+  enable :logging
+end
+
 post '/callback' do
   body = request.body.read
 
