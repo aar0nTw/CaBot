@@ -71,6 +71,7 @@ post '/callback' do
                 template: {
                   type: 'buttons',
                   title: "#{player_name}",
+                  text: "Test",
                   actions: [
                     {
                       type: 'uri',
