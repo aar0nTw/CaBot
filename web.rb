@@ -53,8 +53,7 @@ post '/callback' do
       rich_message = nil
       case event.type
       when Line::Bot::Event::MessageType::Text
-        receive_message = event.message['text']
-
+        receive_message = event.message['text'].downcase
         nba_msg_segment = receive_message.split('nba player ')
         twstock_msg_segment = receive_message.split('stock ')
         cmd_nba_flag = nba_msg_segment.length > 1
