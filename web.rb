@@ -100,7 +100,7 @@ post '/callback' do
         end
 
         if cmd_stock_flag
-          stock_id = nba_msg_segment[1]
+          stock_id = twstock_msg_segment[1]
           image_url = "https://ichart.yahoo.com/t?s=#{stock_id}"
           message = {
             type: "imagemap",
