@@ -49,6 +49,7 @@ post '/callback' do
     puts event.message
     case event
     when Line::Bot::Event::Message
+      message = nil
       case event.type
       when Line::Bot::Event::MessageType::Text
         receive_message = event.message['text']
@@ -56,7 +57,7 @@ post '/callback' do
         nba_msg_segment = receive_message.split('nba player ')
         twstock_msg_segment = receive_message.split('stock ')
         cmd_nba_flag = nba_msg_segment.length > 1
-        cmd_stock_flag = twstock_msg_segment
+        cmd_stock_flag = twstock_msg_segment > 1
         if cmd_nba_flag
           puts 'Confirm'
           player_name = nba_msg_segment[1].gsub(/[^a-zA-Z0-9\-_]+/, '_').downcase
@@ -96,38 +97,40 @@ post '/callback' do
                 text: "沒找到 #{player_name}"
               }
           end
-
-          if cmd_stock_flag
-            stock_id = nba_msg_segment[1]
-            image_url = "https://ichart.yahoo.com/t?s=#{stock_id}"
-            message = {
-              type: "imagemap",
-              baseUrl: image_url,
-              baseSize: {
-                height: 95,
-                width: 190
-              },
-              actions: [
-                {
-                  type: "uri",
-                  linkUri: "https://finance.yahoo.com/quote/#{stock_id}",
-                  area: {
-                    x: 0,
-                    y: 0,
-                    width: 195,
-                    height: 90
-                  }
-                }
-              ]
-
-            }
-          end
-
-          puts event['replyToken']
-          response = client.reply_message(event['replyToken'], message)
-          puts response.body
         end
 
+        if cmd_stock_flag
+          stock_id = nba_msg_segment[1]
+          image_url = "https://ichart.yahoo.com/t?s=#{stock_id}"
+          message = {
+            type: "imagemap",
+            baseUrl: image_url,
+            baseSize: {
+              height: 95,
+              width: 190
+            },
+            actions: [
+              {
+                type: "uri",
+                linkUri: "https://finance.yahoo.com/quote/#{stock_id}",
+                area: {
+                  x: 0,
+                  y: 0,
+                  width: 195,
+                  height: 90
+                }
+              }
+            ]
+
+          }
+        end
+
+        if message
+          puts "Handle message"
+          puts event['replyToken']
+          response = client.reply_message(event['replyToken'], message)
+          puts "reply: #{response.body}"
+        end
       end
     end
   end
