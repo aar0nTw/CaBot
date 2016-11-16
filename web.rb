@@ -60,7 +60,9 @@ post '/callback' do
           player_name = nba_msg_segment[1].gsub(/[^a-zA-Z0-9\-_]+/, '_').downcase
           player_id = player_map[player_name]
           if player_id != nil
+            puts "Loading player..."
             player_news = get_player_news_by_id(player_id)
+            puts player_news
             if player_news.length > 0
               message = {
                 type: 'template',
