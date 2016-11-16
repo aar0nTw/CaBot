@@ -71,7 +71,6 @@ post '/callback' do
                 template: {
                   type: 'buttons',
                   title: "#{player_name}",
-                  text: player_news['PlayerRotowires'][0]['ListItemCaption'][0..100].gsub(/\s\w+\s*$/, '...'),
                   actions: [
                     {
                       type: 'uri',
@@ -95,7 +94,7 @@ post '/callback' do
           end
           puts event['replyToken']
           response = client.reply_message(event['replyToken'], message)
-          puts response
+          puts response.body
         end
 
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
