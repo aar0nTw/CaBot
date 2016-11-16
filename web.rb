@@ -25,7 +25,7 @@ def request_nba_stat
 end
 
 def get_player_news_by_id(player_id)
-  player_uri = URI('http://stats-prod.nba.com/wp-json/statscms/v1/rotowire/player/?playerId=2544&limit=2')
+  player_uri = URI("http://stats-prod.nba.com/wp-json/statscms/v1/rotowire/player/?playerId=#{player_id}&limit=2")
   response = Net::HTTP.get(player_uri)
   data = JSON.parse(response)
 end
@@ -60,17 +60,18 @@ post '/callback' do
           player_name = nba_msg_segment[1].gsub(/[^a-zA-Z0-9\-_]+/, '_').downcase
           player_id = player_map[player_name]
           if player_id != nil
-            puts "Loading player..."
+            puts "Loading player...#{player_name} #{player_id}"
             player_news = get_player_news_by_id(player_id)
             puts player_news
-            if player_news.length > 0
+            if player_news
+              puts "use template for #{player_id}"
               message = {
                 type: 'template',
                 altText: "http://stats.nba.com/player/#!/#{player_id}",
                 template: {
                   type: 'buttons',
                   title: "#{player_name}",
-                  text: player_news['PlayerRotowires'][0]['ListItemCaption'],
+                  text: player_news['PlayerRotowires'][0]['ListItemCaption'][0..100].gsub(/\s\w+\s*$/, '...'),
                   actions: [
                     {
                       type: 'uri',
