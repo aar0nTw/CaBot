@@ -61,6 +61,17 @@ post '/callback' do
         cmd_nba_flag = (receive_message =~ /^\/nba\splayer\s[\w\W]+/) != nil
         cmd_stock_flag = (receive_message =~ /^\/stock\s[\w\W]+/) != nil
         cmd_jav_flag = (receive_message =~ /^\/av\s[\w\W]+/) != nil
+        cmd_help_flag = (receive_message =~ /^cabot help/) != nil
+        if cmd_help_flag
+              message = {
+                type: :text,
+                text: """
+                  /nba player {player_name}: NBA 球員資訊
+                  /stock {stock_id}: 股市資訊
+                  /av {search_term}: AV 番號搜尋
+                """
+              }
+        end
         if cmd_nba_flag
           puts 'Confirm'
           player_name = nba_msg_segment[1].gsub(/[^a-zA-Z0-9\-_]+/, '_').downcase
@@ -129,6 +140,7 @@ post '/callback' do
         end
 
         if cmd_jav_flag
+          puts "AV TERM"
           key_word = jav_msg_segment[1]
           dmm_result = OpenDMM.search key_word
           if dmm_result
