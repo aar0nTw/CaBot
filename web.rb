@@ -68,7 +68,7 @@ post '/callback' do
               first_news = player_news['PlayerRotowires'][0]
               message = {
                 type: 'template',
-                altText: "[#{first_news['Team']}] #{first_new['FirstName']} #{first_news['LastName']}: http://stats.nba.com/player/#!/#{player_id}",
+                altText: "[#{first_news['Team']}] #{first_news['FirstName']} #{first_news['LastName']}: http://stats.nba.com/player/#!/#{player_id}",
                 template: {
                   type: 'buttons',
                   title: "[#{first_news['Team']}] #{first_news['FirstName']} #{first_news['LastName']}",
