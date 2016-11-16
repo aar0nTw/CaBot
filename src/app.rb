@@ -57,7 +57,7 @@ post '/callback' do
         receive_message = event.message['text'].downcase
         nba_msg_segment = receive_message.split('/nba player ')
         twstock_msg_segment = receive_message.split('/stock ')
-        jav_msg_segment = receive_message.split('/stock ')
+        jav_msg_segment = receive_message.split('/av ')
         cmd_nba_flag = (receive_message =~ /^\/nba\splayer\s[\w\W]+/) != nil
         cmd_stock_flag = (receive_message =~ /^\/stock\s[\w\W]+/) != nil
         cmd_jav_flag = (receive_message =~ /^\/av\s[\w\W]+/) != nil
@@ -65,10 +65,10 @@ post '/callback' do
         if cmd_help_flag
               message = {
                 type: :text,
-                text: """
-                  /nba player {player_name}: NBA 球員資訊
-                  /stock {stock_id}: 股市資訊
-                  /av {search_term}: AV 番號搜尋
+                text: """\n
+/nba player {player_name}: NBA 球員資訊\n
+/stock {stock_id}: 股市資訊\n
+/av {search_term}: AV 番號搜尋
                 """
               }
         end
@@ -142,6 +142,7 @@ post '/callback' do
         if cmd_jav_flag
           puts "AV TERM"
           key_word = jav_msg_segment[1]
+          puts "#{key_word}"
           dmm_result = OpenDMM.search key_word
           if dmm_result
             puts dmm_result
@@ -150,6 +151,10 @@ post '/callback' do
               type: :image,
               originalContentUrl: "https://images.weserv.nl/?url=#{cover_uri.host + cover_uri.path}",
               previewImageUrl: "https://images.weserv.nl/?url=#{cover_uri.host + cover_uri.path}"
+            }
+            rich_message = {
+              type: :text,
+              text: "#{dmm_result[:title]}: #{dmm_result[:actresses].join(',')}"
             }
           end
         end
