@@ -26,7 +26,7 @@ end
 
 def get_player_news_by_id(player_id)
   player_uri = URI('http://stats-prod.nba.com/wp-json/statscms/v1/rotowire/player/?playerId=2544&limit=2')
-  response = Net::HTTP.get(nba_stat_uri)
+  response = Net::HTTP.get(player_uri)
   data = JSON.parse(response)
 end
 
