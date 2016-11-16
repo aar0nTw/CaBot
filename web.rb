@@ -50,6 +50,7 @@ post '/callback' do
     case event
     when Line::Bot::Event::Message
       message = nil
+      rich_message = nil
       case event.type
       when Line::Bot::Event::MessageType::Text
         receive_message = event.message['text']
@@ -70,15 +71,15 @@ post '/callback' do
               puts "use template for #{player_id}"
               first_news = player_news['PlayerRotowires'][0]
               message = {
-                type: 'template',
+                type: :template,
                 altText: "[#{first_news['Team']}] #{first_news['FirstName']} #{first_news['LastName']}: http://stats.nba.com/player/#!/#{player_id}",
                 template: {
-                  type: 'buttons',
+                  type: :buttons,
                   title: "[#{first_news['Team']}] #{first_news['FirstName']} #{first_news['LastName']}",
                   text: first_news['ListItemCaption'][0..40],
                   actions: [
                     {
-                      type: 'uri',
+                      type: :uri,
                       label: '球員資訊',
                       uri: "http://stats.nba.com/player/#!/#{player_id}"
                     }
@@ -87,13 +88,13 @@ post '/callback' do
               }
             else
               message = {
-                type: 'text',
+                type: :text,
                 text: "#{player_name} 沒新聞"
               }
             end
           else
               message = {
-                type: 'text',
+                type: :text,
                 text: "沒找到 #{player_name}"
               }
           end
@@ -108,6 +109,21 @@ post '/callback' do
             previewImageUrl: image_url,
           }
           puts "imageurl = #{image_url}"
+          rich_message = {
+            type: :template,
+            altText: "http://finance.yahoo.com/quote/#{stock_id}",
+            template: {
+              type: :buttons,
+              title: stock_id,
+              thumbnailImageUrl: image_url,
+              text: nil,
+              actions: [{
+                type: :uri,
+                label: "Yahoo Finance",
+                uri: "http://finance.yahoo.com/quote/#{stock_id}"
+              }]
+            }
+          }
         end
 
         if message
@@ -115,6 +131,12 @@ post '/callback' do
           puts event['replyToken']
           response = client.reply_message(event['replyToken'], message)
           puts "reply: #{response.body}"
+        end
+        if rich_message
+          puts "Handle rich message"
+          puts event['replyToken']
+          rich_response = client.reply_message(event['replyToken'], rich_message)
+          puts "rich reply: #{rich_response.body}"
         end
       end
     end
