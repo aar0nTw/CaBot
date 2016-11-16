@@ -23,6 +23,7 @@ post '/callback' do
 
   events = client.parse_events_from(body)
   events.each do |event|
+    puts event.message
     case event
     when Line::Bot::Event::Message
       case event.type
@@ -32,6 +33,7 @@ post '/callback' do
           type: 'text',
           text: "reply: #{say_message}"
         }
+        puts event['replyToken']
         response = client.reply_message(event['replyToken'], message)
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
         response = client.get_message_content(event.message['id'])
