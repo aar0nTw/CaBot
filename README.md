@@ -1,54 +1,11 @@
-# LineBot
-A simple Sinatra(Ruby) LineBot Template and tutorial how to setup on Heroku for Line Bot API
-
-圖文說明文章：[http://jiunjiun.logdown.com/posts/2016/10/06/linebot-with-sinatra](http://jiunjiun.logdown.com/posts/2016/10/06/linebot-with-sinatra)
-
-Installation and Usage
-=============
-
-### 1. 註冊一個Line Messaging API
-
-[https://business.line.me/zh-hant/services/bot](https://business.line.me/zh-hant/services/bot)
-
-### 2. Deploy 到 Heroku
-
+# CaBot - A Line bot offer the stock and nba player information.
+![](http://i.imgur.com/rprSjsu.png)
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-\* 記住你的 Heroku ID
-
-### 3. 設定 Line Bot 參數
-
-設定完基本資訊，可以到 Bot Developers 找到
-
-- Channel Secret
-- Channel Access Token
-
-並且設定到 Heroku Config
-
-```
-heroku config:set LINE_CHANNEL_SECRET={YOUR_Channel_Secret}
-heroku config:set LINE_CHANNEL_TOKEN={YOUR_Channel_Access_Token}
-```
-
-接著在 `Edit` 頁面，去修改你的 `Webhook URL`
-
-- `Callback URL`: https://{YOUR_HEROKU_SERVER_ID}.herokuapp.com/callback
-
-完成...
-
--
-
-API 參考：
 [https://devdocs.line.me/en/#imagemap-message](https://devdocs.line.me/en/#imagemap-message)
 
 line-bot-sdk-ruby：
 [https://github.com/line/line-bot-sdk-ruby](https://github.com/line/line-bot-sdk-ruby)
-
-Inspired By
-=============
-
-- [LineBotTemplate](https://github.com/kkdai/LineBotTemplate)
-
 
 License
 ---------------
