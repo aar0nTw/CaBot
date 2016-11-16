@@ -2,6 +2,6 @@
   "name": "CaBot",
   "description": "Line Bot Ca",
   "repository": "https://github.com/aar0ntw/CaBot.git",
-  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "logo": "http://i.imgur.com/rprSjsu.png",
   "keywords": ["Line", "Bot", "Sinatra", "Ruby", "static"]
 }
