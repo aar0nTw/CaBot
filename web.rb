@@ -70,7 +70,7 @@ post '/callback' do
                 template: {
                   type: 'buttons',
                   title: "#{player_name}",
-                  text: player_news[0]['ListItemCaption'],
+                  text: player_news['PlayerRotowires'][0]['ListItemCaption'],
                   actions: [
                     {
                       type: 'uri',
