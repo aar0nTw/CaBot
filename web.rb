@@ -57,7 +57,7 @@ post '/callback' do
         twstock_msg_segment = receive_message.split('twstock ')
         cmd_nba_flag = nba_msg_segment.length > 1
         cmd_stock_flag = twstock_msg_segment
-        if cmd_nba_flag && nba_msg_segment[0] == 'nba player '
+        if cmd_nba_flag
           puts 'Confirm'
           player_name = nba_msg_segment[1].gsub(/[^a-zA-Z0-9\-_]+/, '_').downcase
           player_id = player_map[player_name]
