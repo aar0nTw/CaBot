@@ -65,13 +65,13 @@ post '/callback' do
             puts player_news
             if player_news
               puts "use template for #{player_id}"
-              first_news = player_new['PlayerRotowires'][0]
+              first_news = player_news['PlayerRotowires'][0]
               message = {
                 type: 'template',
                 altText: "[#{first_news['Team']}] #{first_new['FirstName']} #{first_news['LastName']}: http://stats.nba.com/player/#!/#{player_id}",
                 template: {
                   type: 'buttons',
-                  title: "[#{first_news['Team']}] #{first_new['FirstName']} #{first_news['LastName']}",
+                  title: "[#{first_news['Team']}] #{first_news['FirstName']} #{first_news['LastName']}",
                   text: first_news['ListItemCaption'][0..40],
                   actions: [
                     {
