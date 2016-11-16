@@ -149,8 +149,8 @@ post '/callback' do
             cover_uri = URI(dmm_result[:cover_image])
             message = {
               type: :image,
-              originalContentUrl: "https://images.weserv.nl/?url=#{cover_uri.host + cover_uri.path}",
-              previewImageUrl: "https://images.weserv.nl/?url=#{cover_uri.host + cover_uri.path}"
+              originalContentUrl: "https://#{cover_uri.host + cover_uri.path}",
+              previewImageUrl: "https://#{cover_uri.host + cover_uri.path}"
             }
             rich_message = {
               type: :text,
