@@ -115,7 +115,7 @@ post '/callback' do
               type: :buttons,
               title: stock_id,
               thumbnailImageUrl: image_url,
-              text: nil,
+              text: " ",
               actions: [{
                 type: :uri,
                 label: "Yahoo Finance",
