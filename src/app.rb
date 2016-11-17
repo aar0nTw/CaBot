@@ -45,7 +45,7 @@ def get_nba_today
   games.each do |game|
     obj = {}
     obj = {
-      status: "#{game['v']['ta']}] vs [#{game['h']['ta']}]",
+      status: "[#{game['v']['ta']}] vs [#{game['h']['ta']}]",
       text: "[#{game['stt']} #{game['cl']}] #{game['v']['s']} :  #{game['h']['s']}"
     }
     resp[:games] << obj
@@ -122,7 +122,7 @@ post '/callback' do
         if cmd_nba_today_flag
           puts "Grab NBA Today"
           today_json = get_nba_today
-          result_texts = today_json[:games].map {|game| game[:text] + "\n" + game[:status] }
+          result_texts = today_json[:games].map {|game| game[:status] + "\n" + gem[:text]}
           message = {
             type: :text,
             text: "#{today_json[:data]} NBA 即時比數 \n #{result_texts.join("\n\n")}"
