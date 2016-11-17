@@ -32,6 +32,27 @@ def get_player_news_by_id(player_id)
   data = JSON.parse(response)
 end
 
+def get_nba_today
+  nba_today_uri = URI('http://data.nba.com/data/v2015/json/mobile_teams/nba/2016/scores/00_todays_scores.json')
+  response = Net::HTTP.get(nba_today_uri)
+  data = JSON.parse(response)
+  game_stat = data['gs']
+  game_date = game_stat['gdte']
+  games = game_stat['g']
+  resp = {}
+  resp[:date] = game_date
+  resp[:games] = []
+  games.each do |game|
+    obj = {}
+    obj = {
+      status: "#{game['v']['ta']}] vs [#{game['h']['ta']}]",
+      text: "[#{game['stt']} #{game['cl']}] #{game['v']['s']} :  #{game['h']['s']}"
+    }
+    resp[:games] << obj
+  end
+  resp
+end
+
 player_map = request_nba_stat
 
 configure do
@@ -57,12 +78,14 @@ post '/callback' do
       when Line::Bot::Event::MessageType::Text
         receive_message = event.message['text'].downcase
         nba_msg_segment = receive_message.split('/nba player ')
+        nba_today_msg_segment = receive_message.split('/nba today ')
         twstock_msg_segment = receive_message.split('/stock ')
         jav_msg_segment = receive_message.split('/av ')
         dice_msg_segment = receive_message.split('/dice ')
 
 
         cmd_nba_flag = (receive_message =~ /^\/nba\splayer\s[\w\W]+/) != nil
+        cmd_nba_today_flag = (receive_message =~ /^\/nba\stoday$/) != nil
         cmd_stock_flag = (receive_message =~ /^\/stock\s[\w\W]+/) != nil
         cmd_jav_flag = (receive_message =~ /^\/av\s[\w\W]+/) != nil
         cmd_dice_flag = (receive_message =~ /^\/dice\s[\w\W]+/) != nil
@@ -96,9 +119,19 @@ post '/callback' do
           end
         end
 
+        if cmd_nba_today_flag
+          puts "Grab NBA Today"
+          today_json = get_nba_today
+          result_texts = today[:games].map {|game| game[:text] + "\n" + game[:status] }
+          message = {
+            type: :text,
+            text: "#{today_json[:data]} NBA 即時比數 \n #{result_texts.join("\n\n")}"
+          }
+        end
+
         if cmd_nba_flag
-          puts 'Confirm'
-          player_name = nba_msg_segment[1].gsub(/[^a-zA-Z0-9\-_]+/, '_').downcase
+          player_real_name = nba_msg_segment[1]
+          player_name = player_real_name.gsub(/[^a-zA-Z0-9\-_]+/, '_').downcase
           player_id = player_map[player_name]
           if player_id != nil
             puts "Loading player...#{player_name} #{player_id}"
