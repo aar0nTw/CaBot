@@ -85,7 +85,7 @@ post '/callback' do
           if !dice.nil?
             message = {
               type: :text,
-              text: "擲出了 #{dice.roll}"
+              text: "擲出了 #{dice.explain_result}"
             }
           end
         end
