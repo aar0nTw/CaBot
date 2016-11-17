@@ -122,7 +122,7 @@ post '/callback' do
         if cmd_nba_today_flag
           puts "Grab NBA Today"
           today_json = get_nba_today
-          result_texts = today_json[:games].map {|game| game[:status] + "\n" + gem[:text]}
+          result_texts = today_json[:games].map {|game| game[:status] + "\n" + game[:text]}
           message = {
             type: :text,
             text: "#{today_json[:data]} NBA 即時比數 \n #{result_texts.join("\n\n")}"
