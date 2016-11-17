@@ -86,7 +86,7 @@ post '/callback' do
           dice.roll
           prefix = nil
           if !dice.nil?
-            if (desc =~ /^3d6$/) != nil
+            if (desc =~ /^4d6$/) != nil
               prefix = "西八辣！"
             end
             message = {
