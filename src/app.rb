@@ -115,6 +115,8 @@ post '/callback' do
                 type: :text,
                 text: """\n
 /nba player {player_name}: NBA 球員資訊\n
+/nba today: NBA 今日比數\n
+/nba leader: NBA 每日 TOP 10 球員\n
 /stock {stock_id}: 股市資訊\n
 /av {search_term}: AV 番號搜尋\n
 /dice {dice_desc}: 擲骰子 e.g. 3d6+3 => 最少 3 點, 三顆六面骰 = 3~18
