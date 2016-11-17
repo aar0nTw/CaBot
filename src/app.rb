@@ -5,6 +5,7 @@ require 'net/http'
 require 'json'
 require 'opendmm'
 require 'games_dice'
+require 'nokogiri'
 
 def client
   @client ||= Line::Bot::Client.new { |config|
@@ -30,6 +31,24 @@ def get_player_news_by_id(player_id)
   player_uri = URI("http://stats-prod.nba.com/wp-json/statscms/v1/rotowire/player/?playerId=#{player_id}&limit=2")
   response = Net::HTTP.get(player_uri)
   data = JSON.parse(response)
+end
+
+def get_daily_leaders
+  result = []
+  dl = Nokogiri::HTML(open('http://basketball.realgm.com/nba/daily-leaders'))
+  top_ten = dl.search('table.tablesaw>tbody>tr')[0..9]
+  top_ten.each do |player_dom|
+    player_values = player_dom.search('td')
+    player_rank = player_values[0].content
+    player_name = player_values[1].content
+    player_pic = player_values[19].content
+    result << {
+      rank: player_rank,
+      name: player_name,
+      pic: player_pic
+    }
+  end
+  result
 end
 
 def get_nba_today
@@ -78,7 +97,6 @@ post '/callback' do
       when Line::Bot::Event::MessageType::Text
         receive_message = event.message['text'].downcase
         nba_msg_segment = receive_message.split('/nba player ')
-        nba_today_msg_segment = receive_message.split('/nba today ')
         twstock_msg_segment = receive_message.split('/stock ')
         jav_msg_segment = receive_message.split('/av ')
         dice_msg_segment = receive_message.split('/dice ')
@@ -86,6 +104,7 @@ post '/callback' do
 
         cmd_nba_flag = (receive_message =~ /^\/nba\splayer\s[\w\W]+/) != nil
         cmd_nba_today_flag = (receive_message =~ /^\/nba\stoday$/) != nil
+        cmd_nba_leader_flag = (receive_message =~ /^\/nba\sleader$/) != nil
         cmd_stock_flag = (receive_message =~ /^\/stock\s[\w\W]+/) != nil
         cmd_jav_flag = (receive_message =~ /^\/av\s[\w\W]+/) != nil
         cmd_dice_flag = (receive_message =~ /^\/dice\s[\w\W]+/) != nil
@@ -119,13 +138,23 @@ post '/callback' do
           end
         end
 
+        if cmd_nba_leader_flag
+          puts "Grab NBA Leader"
+          leader = get_daily_leaders
+          result_leaders = leader.map {|player| "#{player[:rank]} - #{player[:name]} - #{player[:pic]}"}
+          message = {
+            type: :text,
+            text: "Rank - Name - PIC \n\n #{result_leaders.join("\n\n")}"
+          }
+        end
+
         if cmd_nba_today_flag
           puts "Grab NBA Today"
           today_json = get_nba_today
           result_texts = today_json[:games].map {|game| game[:status] + "\n" + game[:text]}
           message = {
             type: :text,
-            text: "#{today_json[:data]} NBA 即時比數 \n #{result_texts.join("\n\n")}"
+            text: "#{today_json[:date]} NBA 即時比數 \n #{result_texts.join("\n\n")}"
           }
         end
 
