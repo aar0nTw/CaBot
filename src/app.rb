@@ -139,7 +139,7 @@ post '/callback' do
 
         if cmd_stock_flag
           stock_id = twstock_msg_segment[1]
-          image_url = URI.escape("https://ichart.yahoo.com/t?s=#{stock_id}&time=#{Time.now.to_i}")
+          image_url = URI.escape("https://ichart.yahoo.com/t?s=#{stock_id}&time=#{Time.now.to_i.to_s[0..-2]}")
           message = {
             type: :image,
             originalContentUrl: image_url,
