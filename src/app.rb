@@ -81,12 +81,17 @@ post '/callback' do
         end
 
         if cmd_dice_flag
-          dice = GamesDice.create dice_msg_segment[1].to_s
+          desc = dice_msg_segment[1].to_s
+          dice = GamesDice.create desc
           dice.roll
+          prefix = nil
           if !dice.nil?
+            if (desc =~ /^3d6$/) != nil
+              prefix = "西八辣！"
+            end
             message = {
               type: :text,
-              text: "擲出了 #{dice.result} (#{dice.explain_result})"
+              text: "#{prefix}擲出了 #{dice.result} (#{dice.explain_result})"
             }
           end
         end
