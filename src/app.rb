@@ -157,7 +157,7 @@ post '/callback' do
               actions: [{
                 type: :uri,
                 label: "Yahoo Finance",
-                uri: "http://finance.yahoo.com/quote/#{stock_id}"
+                uri: URI.escape("http://finance.yahoo.com/quote/#{stock_id}")
               }]
             }
           }
