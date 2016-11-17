@@ -144,7 +144,7 @@ post '/callback' do
           result_leaders = leader.map {|player| "#{player[:rank]} - #{player[:name]} - #{player[:pic]}"}
           message = {
             type: :text,
-            text: "Rank - Name - PIC \n\n #{result_leaders.join("\n\n")}"
+            text: "NBA Today's PIC Rank - Name - PIC \n\n #{result_leaders.join("\n\n")}"
           }
         end
 
