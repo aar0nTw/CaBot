@@ -4,6 +4,7 @@ require 'line/bot'
 require 'net/http'
 require 'json'
 require 'opendmm'
+require 'games_dice'
 
 def client
   @client ||= Line::Bot::Client.new { |config|
@@ -58,10 +59,15 @@ post '/callback' do
         nba_msg_segment = receive_message.split('/nba player ')
         twstock_msg_segment = receive_message.split('/stock ')
         jav_msg_segment = receive_message.split('/av ')
+        dice_msg_segment = receive_message.split('/dice ')
+
+
         cmd_nba_flag = (receive_message =~ /^\/nba\splayer\s[\w\W]+/) != nil
         cmd_stock_flag = (receive_message =~ /^\/stock\s[\w\W]+/) != nil
         cmd_jav_flag = (receive_message =~ /^\/av\s[\w\W]+/) != nil
+        cmd_dice_flag = (receive_message =~ /^\/dice\s[\w\W]+/) != nil
         cmd_help_flag = (receive_message =~ /^cabot help/) != nil
+
         if cmd_help_flag
               message = {
                 type: :text,
@@ -72,6 +78,17 @@ post '/callback' do
                 """
               }
         end
+
+        if cmd_dice_flag
+          dice = GamesDice.create dice_msg_segment.to_s
+          if !dice.nil?
+            message = {
+              type: :text,
+              text: "擲出了 #{dice.roll}"
+            }
+          end
+        end
+
         if cmd_nba_flag
           puts 'Confirm'
           player_name = nba_msg_segment[1].gsub(/[^a-zA-Z0-9\-_]+/, '_').downcase

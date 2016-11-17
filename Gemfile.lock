@@ -6,9 +6,12 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    blankslate (3.1.3)
     chronic_duration (0.10.6)
       numerizer (~> 0.1.1)
     concurrent-ruby (1.0.2)
+    games_dice (0.3.11)
+      parslet (>= 1.5.0)
     httparty (0.14.0)
       multi_xml (>= 0.5.2)
     i18n (0.7.0)
@@ -24,6 +27,8 @@ GEM
       chronic_duration
       httparty
       nokogiri
+    parslet (1.7.1)
+      blankslate (>= 2.0, <= 4.0)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -45,6 +50,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  games_dice
   line-bot-api
   opendmm
   sinatra
