@@ -82,10 +82,11 @@ post '/callback' do
 
         if cmd_dice_flag
           dice = GamesDice.create dice_msg_segment[1].to_s
+          dice.roll
           if !dice.nil?
             message = {
               type: :text,
-              text: "擲出了 #{dice.explain_result}"
+              text: "擲出了 #{dice.result} (#{dice.explain_result})"
             }
           end
         end
