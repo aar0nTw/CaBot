@@ -80,7 +80,7 @@ post '/callback' do
         end
 
         if cmd_dice_flag
-          dice = GamesDice.create dice_msg_segment.to_s
+          dice = GamesDice.create dice_msg_segment[1].to_s
           if !dice.nil?
             message = {
               type: :text,
