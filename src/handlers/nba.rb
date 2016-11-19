@@ -1,5 +1,6 @@
 require 'json'
 require 'nokogiri'
+require 'cabot/core/command_processor'
 
 module NBA
   class Today

@@ -1,4 +1,5 @@
 require 'games_dice'
+require 'cabot/core/command_processor'
 
 class Dice
   PATTERN = /^\/dice\s([\w\W]+)/
@@ -12,9 +13,8 @@ class Dice
   end
 
   def reply(text)
-    segment = text.match(PATTERN).captures[0]
-    puts segment
-    dice = GamesDice.create segment
+    desc = text.match(PATTERN).captures[0]
+    dice = GamesDice.create desc
     dice.roll
     prefix = nil
     if !dice.nil?

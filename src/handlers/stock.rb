@@ -1,4 +1,5 @@
 require 'json'
+require 'cabot/core/command_processor'
 
 class Stock
   PATTERN = /^\/stock\s([\w\W]+)/

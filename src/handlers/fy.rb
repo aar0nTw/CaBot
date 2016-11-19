@@ -1,5 +1,6 @@
 require 'bing_translator'
 require 'cabot/core/command_processor'
+
 class Fy
   PATTERN = /^\/fy\s([\w\W]+)/
   def initialize
