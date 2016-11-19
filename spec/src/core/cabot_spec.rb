@@ -97,7 +97,7 @@ EOS
     end
 
     it "When Register a rule, then rule_hash length should add 1" do
-      expect(CommandProcessor.rules_hash.length).to eq 1
+      expect(CommandProcessor.rules_hash.length).to eq 2
     end
 
     it "When Register a rule, then rule_hash length should add rule " do
