@@ -1,3 +1,6 @@
+require 'coveralls'
+Coveralls.wear!
+
 $LOAD_PATH.unshift File.expand_path("../../src", __FILE__)
 require 'cabot/cabot'
 require 'cabot/version'

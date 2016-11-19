@@ -15,5 +15,6 @@ group :test do
   gem 'webmock'
   gem 'rspec'
   gem 'pry'
+  gem 'coveralls', require: false
 end
 
