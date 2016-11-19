@@ -33,7 +33,6 @@ module Cabot
     end
 
     def send_messages(messages = [])
-      puts "messages #{messages}, reply_token: #{reply_token}"
       if messages && messages.any?
         client.reply_message(reply_token, messages)
         return true
