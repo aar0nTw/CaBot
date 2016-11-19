@@ -136,7 +136,7 @@ post '/callback' do
           word = fy_msg_segment[1].to_s
           from_lang = translator.detect word
           to_lang = "zh-CHT"
-          puts "from #{form_lang} to #{to_lang}"
+          puts "from #{from_lang} to #{to_lang}"
           case from_lang
           when "zh-CHT", "zh-CHS", "zh", "zh-TW"
             to_lang = :en
