@@ -135,10 +135,12 @@ post '/callback' do
         if cmd_fy_flag
           word = fy_msg_segment[1].to_s
           from_lang = translator.detect word
-          to_lang = "zh-CHT"
+          to_lang = nil
           puts "from #{from_lang} to #{to_lang}"
-          if %w(zh-CHT zh-CHS).include? from_lang
+          if %w(zh-CHT zh-CHS).include? from_lang.to_s
             to_lang = :en
+          else
+            to_lang = 'zh-CHT'
           end
           puts "from #{from_lang} to #{to_lang}"
           translate_result = translator.translate(word, form: from_lang, to: to_lang)
