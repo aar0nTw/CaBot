@@ -32,9 +32,12 @@ module Cabot
       end
     end
 
-    def send_messages(messages)
-      client.reply_message(reply_token, messages) if messages
-      true
+    def send_messages(messages = [])
+      if messages.any?
+        client.reply_message(reply_token, messages) 
+        return true
+      end
+      false
     end
 
     def client

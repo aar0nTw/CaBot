@@ -61,6 +61,11 @@ EOS
       expect(@cabot.send_messages({type: 'text', text: 'foo'})).to eq true
     end
 
+    it "Send empty array should return false" do
+      Line::Bot::Client.any_instance.stub(:reply_message => {})
+      expect(@cabot.send_messages([])).to eq false
+    end
+
     it "cabot.handle should call a CommandProcessor match" do
       Line::Bot::Client.any_instance.stub(:validate_signature => true)
       Line::Bot::Client.any_instance.stub(:reply_message => {})
@@ -75,7 +80,8 @@ EOS
     DUMMY_DATA = {
       regex: /^\/cabot\W\w+/,
       msg: "Hello World",
-      send_text: "/cabot hi"
+      send_text: "/cabot hi",
+      send_not_match_text: "/gh"
     }
     before {
       handler = Object
@@ -104,6 +110,10 @@ EOS
 
     it "When match a rule, show return method result" do
       expect(CommandProcessor.match(DUMMY_DATA[:send_text])).to eq DUMMY_DATA[:msg] + DUMMY_DATA[:send_text]
+    end
+
+    it "When not match any rule, return []" do
+      expect(CommandProcessor.match(DUMMY_DATA[:send_not_match_text])).to eq []
     end
 
   end

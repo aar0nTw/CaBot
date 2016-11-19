@@ -18,6 +18,7 @@ module Cabot
               return reply text
             end
           end
+          []
         end
 
       end
