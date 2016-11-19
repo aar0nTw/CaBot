@@ -1,4 +1,3 @@
-require 'pry'
 module Cabot
   module Core
     class CommandProcessor
