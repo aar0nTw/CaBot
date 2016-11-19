@@ -26,15 +26,15 @@ module Cabot
           case event.type
           when Line::Bot::Event::MessageType::Text
             @reply_token = event['replyToken']
-            send_messages Core::CommandProcessor.match event
+            send_messages Core::CommandProcessor.match event.message[:text]
           end
         end
       end
     end
 
     def send_messages(messages = [])
-      if messages.any?
-        client.reply_message(reply_token, messages) 
+      if messages && messages.any?
+        client.reply_message(reply_token, messages)
         return true
       end
       false
