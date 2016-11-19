@@ -45,3 +45,5 @@ class Stock
      URI.escape("https://ichart.yahoo.com/t?s=#{stock_id}&time=#{Time.now.to_i.to_s[0..-2]}")
   end
 end
+
+Cabot::Core::CommandProcessor.register_rule(/^\/stock\s[\w\W]+/, Stock)
