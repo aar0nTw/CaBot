@@ -63,7 +63,7 @@ module NBA
       date = text.match(PATTERN).captures[0]
       {
         type: :text,
-        text: "NBA Today's PIC Rank - Name - PIC \n\n #{leaders(date).join("\n\n")}"
+        text: "NBA #{date || "Today"}'s PIC Rank - Name - PIC \n\n #{leaders(date).join("\n\n")}"
       }
     end
 
