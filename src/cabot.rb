@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'cabot/cabot'
 
 def cabot
   @cabot ||= Cabot.new ENV["LINE_CHANNEL_SECRET"], ENV["LINE_CHANNEL_TOKEN"]
