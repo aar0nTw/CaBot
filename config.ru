@@ -1,4 +1,4 @@
-require './src/app'
+require './src/cabot'
 $stdout.sync = true
 run Sinatra::Application
 
