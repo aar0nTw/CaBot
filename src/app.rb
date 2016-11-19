@@ -126,7 +126,8 @@ post '/callback' do
 /nba leader: NBA 每日 TOP 10 球員\n
 /stock {stock_id}: 股市資訊\n
 /av {search_term}: AV 番號搜尋\n
-/dice {dice_desc}: 擲骰子 e.g. 3d6+3 => 最少 3 點, 三顆六面骰 = 3~18
+/dice {dice_desc}: 擲骰子 e.g. 3d6+3 => 最少 3 點, 三顆六面骰 = 3~21\n
+/fy {text}: 翻譯
                 """
               }
         end
