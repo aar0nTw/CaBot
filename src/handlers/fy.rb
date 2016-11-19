@@ -5,6 +5,14 @@ class Fy
     @translator ||= BingTranslator.new(ENV['AZURE_CLIENT_ID'], ENV['AZURE_CLIENT_SECRET'])
   end
 
+  def cmd_name
+    "/fy"
+  end
+
+  def manual
+    "自動翻譯"
+  end
+
   def reply(text)
     fy_msg_segment = text.split('/fy ')
     word = fy_msg_segment[1].to_s

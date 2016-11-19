@@ -2,6 +2,7 @@ module Cabot
   module Core
     class CommandProcessor
       class << self
+        HELP_PATTERN = /^\/help/
         @@rules_hash = {}
         def rules_hash
           @@rules_hash
@@ -12,6 +13,10 @@ module Cabot
         end
 
         def match(text)
+          # for /help command
+          if HELP_PATTERN.match text
+            return help
+          end
           rules_hash.each do |regex, reply|
             if regex.match text
               return reply.call text
@@ -20,6 +25,13 @@ module Cabot
           []
         end
 
+        def help
+          text = rules_hash.map {|regex, reply| "#{reply.cmd_name}: #{reply.manual}"}.join('\n')
+          {
+            type: :text,
+            text: text
+          }
+        end
       end
     end
   end

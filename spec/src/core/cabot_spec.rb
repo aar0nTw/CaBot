@@ -79,12 +79,15 @@ EOS
     CommandProcessor = Cabot::Core::CommandProcessor
     DUMMY_DATA = {
       regex: /^\/cabot\W\w+/,
+      help: "/help",
       msg: "Hello World",
       send_text: "/cabot hi",
       send_not_match_text: "/gh"
     }
     before {
       handler = Object
+      handler.any_instance.stub(:cmd_name) { '/cabot' }
+      handler.any_instance.stub(:manual) { 'say hi' }
       handler.any_instance.stub(:reply) {|text| msg + DUMMY_DATA[:send_text] }
       handler.any_instance.stub(:msg) { DUMMY_DATA[:msg] }
       CommandProcessor.register_rule DUMMY_DATA[:regex], handler
@@ -114,6 +117,10 @@ EOS
 
     it "When not match any rule, return []" do
       expect(CommandProcessor.match(DUMMY_DATA[:send_not_match_text])).to eq []
+    end
+
+    it "When match help, show command list" do
+      expect(CommandProcessor.match(DUMMY_DATA[:help])).to eq({type: :text, text: "/cabot: say hi"})
     end
 
   end
