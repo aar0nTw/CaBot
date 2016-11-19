@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'cabot/cabot'
 # Plug-in require
-%w(fy av stock dice).each do |plugin|
+%w(nba fy av stock dice).each do |plugin|
   require File.dirname(__FILE__) + "/handlers/#{plugin}.rb"
 end
 
