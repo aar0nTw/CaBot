@@ -3,7 +3,7 @@
 
 
 
-[![license](https://img.shields.io/github/license/aar0nTw/CaBot.svg)]() [![Travis](https://img.shields.io/travis/aar0nTw/CaBot.svg)]()
+[![license](https://img.shields.io/github/license/aar0nTw/CaBot.svg)]() [![Travis](https://img.shields.io/travis/aar0nTw/CaBot.svg)]() [![Coveralls](https://img.shields.io/coveralls/aar0nTw/CaBot.svg)]()
 
 
 ## Resources
