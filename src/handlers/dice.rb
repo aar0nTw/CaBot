@@ -12,7 +12,8 @@ class Dice
   end
 
   def reply(text)
-    segment = Dice::PATTERN.match(text).captures[0]
+    segment = text.match(PATTERN).captures[0]
+    puts segment
     dice = GamesDice.create segment
     dice.roll
     prefix = nil
