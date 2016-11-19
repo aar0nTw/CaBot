@@ -1,6 +1,7 @@
 require 'json'
 
 class Stock
+  PATTERN = /^\/stock\s([\w\W]+)/
   def cmd_name
     "/stock {stock code}"
   end
@@ -11,8 +12,7 @@ class Stock
 
   def reply(text)
     resp = []
-    segment = text.split('/stock ')
-    stock_id = segment[1]
+    stock_id = text.match(Stock::PATTERN).captures[0]
 
     resp.push({
       type: :image,
@@ -46,4 +46,4 @@ class Stock
   end
 end
 
-Cabot::Core::CommandProcessor.register_rule(/^\/stock\s[\w\W]+/, Stock)
+Cabot::Core::CommandProcessor.register_rule(Stock::PATTERN, Stock)

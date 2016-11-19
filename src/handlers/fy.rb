@@ -1,6 +1,7 @@
 require 'bing_translator'
 require 'cabot/core/command_processor'
 class Fy
+  PATTERN = /^\/fy\s([\w\W]+)/
   def initialize
     @translator ||= BingTranslator.new(ENV['AZURE_CLIENT_ID'], ENV['AZURE_CLIENT_SECRET'])
   end
@@ -14,8 +15,7 @@ class Fy
   end
 
   def reply(text)
-    fy_msg_segment = text.split('/fy ')
-    word = fy_msg_segment[1].to_s
+    word = text.match(Fy::PATTERN).captures[0]
     from_lang = translator.detect word
     to_lang = nil
 
@@ -38,4 +38,4 @@ class Fy
   end
 end
 
-Cabot::Core::CommandProcessor.register_rule(/^\/fy\s[\w\W]+/, Fy)
+Cabot::Core::CommandProcessor.register_rule(Fy::PATTERN, Fy)
