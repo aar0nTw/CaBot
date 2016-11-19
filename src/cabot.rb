@@ -7,4 +7,5 @@ end
 
 post '/callback' do
   cabot.handle request
+  "OK"
 end
