@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'cabot/cabot'
 # Auto-require
-%w(fy stock).each do |plugin|
+%w(dice fy stock).each do |plugin|
   require File.dirname(__FILE__) + "/handlers/#{plugin}.rb"
 end
 
