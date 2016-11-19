@@ -3,6 +3,7 @@ require 'json'
 module NBA
   class Today
     PATTERN = /^\/nba today$/
+    TODAY_URI = URI('http://data.nba.com/data/v2015/json/mobile_teams/nba/2016/scores/00_todays_scores.json')
     def cmd_name
       "/nba today"
     end
@@ -39,8 +40,7 @@ module NBA
       resp
     end
     def nba_today_data
-      URI('http://data.nba.com/data/v2015/json/mobile_teams/nba/2016/scores/00_todays_scores.json')
-      response = Net::HTTP.get(nba_today_uri)
+      response = Net::HTTP.get NBA::Today::TODAY_URI
       JSON.parse(response)
     end
 
