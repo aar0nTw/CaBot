@@ -1,4 +1,4 @@
-# CaBot - A Line bot offer the stock and nba player information.
+# CaBot - A Life bot for [Line](https://line.me)
 ![](http://i.imgur.com/rprSjsu.png)
 
 
