@@ -6,7 +6,7 @@ class Fy
   end
 
   def cmd_name
-    "/fy"
+    "/fy {text}"
   end
 
   def manual
