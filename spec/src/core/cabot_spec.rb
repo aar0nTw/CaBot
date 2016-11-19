@@ -107,8 +107,8 @@ EOS
       expect(CommandProcessor.rules_hash.has_key? DUMMY_DATA[:regex]).to eq true
     end
 
-    it "When Register a rule, then rule_hash[key] should be a method name reply" do
-      expect(CommandProcessor.rules_hash[DUMMY_DATA[:regex]].name).to eq :reply
+    it "When Register a rule, then rule_hash[key] should be a instance" do
+      expect(CommandProcessor.rules_hash[DUMMY_DATA[:regex]]).to be_a Object
     end
 
     it "When match a rule, show return method result" do

@@ -1,3 +1,4 @@
+require 'pry'
 module Cabot
   module Core
     class CommandProcessor
@@ -9,7 +10,7 @@ module Cabot
         end
 
         def register_rule(regex, handler)
-          rules_hash[regex] = handler.new.method :reply
+          rules_hash[regex] = handler.new
         end
 
         def match(text)
@@ -17,16 +18,16 @@ module Cabot
           if HELP_PATTERN.match text
             return help
           end
-          rules_hash.each do |regex, reply|
+          rules_hash.each do |regex, handler|
             if regex.match text
-              return reply.call text
+              return handler.reply text
             end
           end
           []
         end
 
         def help
-          text = rules_hash.map {|regex, reply| "#{reply.cmd_name}: #{reply.manual}"}.join('\n')
+          text = rules_hash.map {|regex, handler| "#{handler.cmd_name}: #{handler.manual}"}.join('\n')
           {
             type: :text,
             text: text
