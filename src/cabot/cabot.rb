@@ -26,7 +26,7 @@ module Cabot
           case event.type
           when Line::Bot::Event::MessageType::Text
             @reply_token = event['replyToken']
-            send_messages Core::CommandProcessor.match event.message[:text]
+            send_messages Core::CommandProcessor.match event.message['text'].downcase
           end
         end
       end
