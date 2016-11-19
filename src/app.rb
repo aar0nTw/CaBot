@@ -6,12 +6,17 @@ require 'json'
 require 'opendmm'
 require 'games_dice'
 require 'nokogiri'
+require 'bing_translator'
 
 def client
   @client ||= Line::Bot::Client.new { |config|
     config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
     config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
   }
+end
+
+def translator
+  @translator ||= BingTranslator.new(ENV['AZURE_CLIENT_ID'], ENV['AZURE_CLIENT_SECRET'])
 end
 
 def request_nba_stat
@@ -100,6 +105,7 @@ post '/callback' do
         twstock_msg_segment = receive_message.split('/stock ')
         jav_msg_segment = receive_message.split('/av ')
         dice_msg_segment = receive_message.split('/dice ')
+        fy_msg_segment = receive_message.split('/fy ')
 
 
         cmd_nba_flag = (receive_message =~ /^\/nba\splayer\s[\w\W]+/) != nil
@@ -108,6 +114,7 @@ post '/callback' do
         cmd_stock_flag = (receive_message =~ /^\/stock\s[\w\W]+/) != nil
         cmd_jav_flag = (receive_message =~ /^\/av\s[\w\W]+/) != nil
         cmd_dice_flag = (receive_message =~ /^\/dice\s[\w\W]+/) != nil
+        cmd_fy_flag = (receive_message =~ /^\/fy\s[\w\W]+/) != nil
         cmd_help_flag = (receive_message =~ /^cabot help/) != nil
 
         if cmd_help_flag
@@ -122,6 +129,21 @@ post '/callback' do
 /dice {dice_desc}: 擲骰子 e.g. 3d6+3 => 最少 3 點, 三顆六面骰 = 3~18
                 """
               }
+        end
+
+        if cmd_fy_flag
+          word = fy_msg_segment[1].to_s
+          from_lang = translator.detect word
+          to_lang = "zh-CHT"
+          case from_lang
+          when "zh-CHT", "zh-CHS"
+            to_lang = :en
+          end
+          translate_result = translator.translate(word, form: from_lang, to: to_lang)
+          message = {
+            type: :text,
+            text: translate_result
+          }
         end
 
         if cmd_dice_flag
