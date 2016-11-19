@@ -48,14 +48,15 @@ module NBA
   end
 
   class Leader
-    PATTERN = /^\/nba leader$/
-    FIC_URI = 'http://basketball.realgm.com/nba/daily-leaders'
+    PATTERN = /^\/nba leader\s*([1-2][9,0][0-9]{2}-[0-9][1-2]-[0-3][0-9])*$/
+    FIC_URI = 'http://basketball.realgm.com/nba/daily-leaders/'
     def cmd_name
-      "/nba leader"
+      "/nba leader {+date}"
     end
 
     def manual
-      "NBA 今日球員榜 Top 10 (Rank by FIC[Floor Impact Counter])"
+      "\n     NBA 今日球員榜 Top 10 (Rank by FIC[Floor Impact Counter])" +
+      "\n     也可查詢過去日期 e.g. /nba leader 2016-11-01"
     end
 
     def reply(text)
@@ -66,13 +67,18 @@ module NBA
     end
 
     private
-    def leaders
+    def leaders(date = nil)
       daily_leaders.map {|player| "#{player[:rank]} - #{player[:name]} - #{player[:pic]}"}
     end
 
-    def daily_leaders
+    def daily_leaders(date = nil)
+      uri = NBA::Leader::FIC_URI
+      if date
+        date = Date.parse date
+        uri += date.to_s
+      end
       result = []
-      dl = Nokogiri::HTML(open(NBA::Leader::FIC_URI))
+      dl = Nokogiri::HTML(open(uri))
       top_ten = dl.search('table.tablesaw>tbody>tr')[0..9]
       top_ten.each do |player_dom|
         player_values = player_dom.search('td')
