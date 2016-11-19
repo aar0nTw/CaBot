@@ -137,11 +137,10 @@ post '/callback' do
           from_lang = translator.detect word
           to_lang = "zh-CHT"
           puts "from #{from_lang} to #{to_lang}"
-          case from_lang
-          when "zh-CHT", "zh-CHS", "zh", "zh-TW"
+          if %w(zh-CHT zh-CHS).include? from_lang
             to_lang = :en
           end
-          puts "from #{form_lang} to #{to_lang}"
+          puts "from #{from_lang} to #{to_lang}"
           translate_result = translator.translate(word, form: from_lang, to: to_lang)
           message = {
             type: :text,
