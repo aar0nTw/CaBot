@@ -1,5 +1,6 @@
 require 'line/bot'
 require 'cabot/core/command_processor'
+require 'handler/fy'
 
 module Cabot
   class Cabot
