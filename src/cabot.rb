@@ -8,6 +8,10 @@ require 'games_dice'
 require 'nokogiri'
 require 'bing_translator'
 
+def cabot
+  @cabot ||= Cabot.new ENV["LINE_CHANNEL_SECRET"], ENV["LINE_CHANNEL_TOKEN"]
+end
+
 def client
   @client ||= Line::Bot::Client.new { |config|
     config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
