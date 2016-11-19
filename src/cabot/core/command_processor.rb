@@ -12,6 +12,8 @@ module Cabot
         end
 
         def match(text)
+          puts text
+          puts "rules_hash: #{rules_hash}"
           rules_hash.each do |regex, reply|
             if regex.match text
               return reply text
