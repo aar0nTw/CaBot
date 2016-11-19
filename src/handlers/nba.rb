@@ -1,4 +1,5 @@
 require 'json'
+require 'nokogiri'
 
 module NBA
   class Today
@@ -45,6 +46,49 @@ module NBA
     end
 
   end
+
+  class Leader
+    PATTERN = /^\/nba leader$/
+    FIC_URI = 'http://basketball.realgm.com/nba/daily-leaders'
+    def cmd_name
+      "/nba leader"
+    end
+
+    def manual
+      "NBA 今日球員榜 Top 10 (Rank by FIC[Floor Impact Counter])"
+    end
+
+    def reply(text)
+      {
+        type: :text,
+        text: "NBA Today's PIC Rank - Name - PIC \n\n #{leaders.join("\n\n")}"
+      }
+    end
+
+    private
+    def leaders
+      daily_leaders.map {|player| "#{player[:rank]} - #{player[:name]} - #{player[:pic]}"}
+    end
+
+    def daily_leaders
+      result = []
+      dl = Nokogiri::HTML(open(NBA::Leader::FIC_URI))
+      top_ten = dl.search('table.tablesaw>tbody>tr')[0..9]
+      top_ten.each do |player_dom|
+        player_values = player_dom.search('td')
+        player_rank = player_values[0].content
+        player_name = player_values[1].content
+        player_pic = player_values[19].content
+        result << {
+          rank: player_rank,
+          name: player_name,
+          pic: player_pic
+        }
+      end
+      result
+    end
+  end
 end
 
 Cabot::Core::CommandProcessor.register_rule(NBA::Today::PATTERN, NBA::Today)
+Cabot::Core::CommandProcessor.register_rule(NBA::Leader::PATTERN, NBA::Leader)
