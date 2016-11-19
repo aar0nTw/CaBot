@@ -1,25 +1,19 @@
 # CaBot - A Line bot offer the stock and nba player information.
 ![](http://i.imgur.com/rprSjsu.png)
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-[https://devdocs.line.me/en/#imagemap-message](https://devdocs.line.me/en/#imagemap-message)
+
+[![license](https://img.shields.io/github/license/aar0nTw/CaBot.svg)]() [![Travis](https://img.shields.io/travis/aar0nTw/CaBot.svg)]()
+
+
+## Resources
+
+Line API Documents
+[https://devdocs.line.me/en/](https://devdocs.line.me/en/)
 
 line-bot-sdk-ruby：
 [https://github.com/line/line-bot-sdk-ruby](https://github.com/line/line-bot-sdk-ruby)
 
-License
----------------
+## Deploy to heroku your own
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
