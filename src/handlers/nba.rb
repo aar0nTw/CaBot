@@ -60,15 +60,16 @@ module NBA
     end
 
     def reply(text)
+      date = text.match(PATTERN).captures[0]
       {
         type: :text,
-        text: "NBA Today's PIC Rank - Name - PIC \n\n #{leaders.join("\n\n")}"
+        text: "NBA Today's PIC Rank - Name - PIC \n\n #{leaders(date).join("\n\n")}"
       }
     end
 
     private
     def leaders(date = nil)
-      daily_leaders.map {|player| "#{player[:rank]} - #{player[:name]} - #{player[:pic]}"}
+      daily_leaders(date).map {|player| "#{player[:rank]} - #{player[:name]} - #{player[:pic]}"}
     end
 
     def daily_leaders(date = nil)
@@ -77,9 +78,11 @@ module NBA
         date = Date.parse date
         uri += date.to_s
       end
+      puts uri
       result = []
       dl = Nokogiri::HTML(open(uri))
       top_ten = dl.search('table.tablesaw>tbody>tr')[0..9]
+      puts top_ten
       top_ten.each do |player_dom|
         player_values = player_dom.search('td')
         player_rank = player_values[0].content
