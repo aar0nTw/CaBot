@@ -26,7 +26,7 @@ module Cabot
         end
 
         def help
-          text = rules_hash.map {|regex, handler| "#{handler.cmd_name}: #{handler.manual}"}.join('\n')
+          text = rules_hash.map {|regex, handler| "#{handler.cmd_name}: #{handler.manual}"}.join("\n")
           {
             type: :text,
             text: text
