@@ -2,13 +2,12 @@ require 'opendmm'
 
 class AV
   PATTERN = /^\/av\s([\w\W]+)/
+  attr_reader :cmd_name
+  attr_reader :manual
 
-  def cmd_name
-    "/av {av_no}"
-  end
-
-  def manual
-    "番號搜尋器"
+  def initialize
+    @cmd_name = "/av {av_no}"
+    @manual = "番號搜尋器"
   end
 
   def reply(text)

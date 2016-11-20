@@ -3,16 +3,13 @@ require 'cabot/core/command_processor'
 
 class Fy
   PATTERN = /^\/fy\s([\w\W]+)/
+  attr_reader :cmd_name
+  attr_reader :manual
+
   def initialize
+    @cmd_name = "/fy {text}"
+    @manual = "自動翻譯"
     @translator ||= BingTranslator.new(ENV['AZURE_CLIENT_ID'], ENV['AZURE_CLIENT_SECRET'])
-  end
-
-  def cmd_name
-    "/fy {text}"
-  end
-
-  def manual
-    "自動翻譯"
   end
 
   def reply(text)
@@ -34,9 +31,7 @@ class Fy
   end
 
   private
-  def translator
-    @translator
-  end
+  attr_reader :translator
 end
 
 Cabot::Core::CommandProcessor.register_rule(Fy::PATTERN, Fy)

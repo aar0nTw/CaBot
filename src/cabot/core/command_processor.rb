@@ -4,6 +4,7 @@ module Cabot
       class << self
         HELP_PATTERN = /^\/help/
         @@rules_hash = {}
+
         def rules_hash
           @@rules_hash
         end

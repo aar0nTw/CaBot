@@ -3,6 +3,9 @@ require 'cabot/core/command_processor'
 
 module Cabot
   class Cabot
+    attr_reader :client
+    attr_reader :reply_token
+
     def initialize(channel_secret, channel_token)
       @client = Line::Bot::Client.new { |config|
         config.channel_secret = channel_secret
@@ -38,14 +41,6 @@ module Cabot
         return true
       end
       false
-    end
-
-    def client
-      @client
-    end
-
-    def reply_token
-      @reply_token
     end
 
   end
