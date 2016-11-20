@@ -3,7 +3,7 @@
 
 
 
-[![license](https://img.shields.io/github/license/aar0nTw/CaBot.svg)]() [![Travis](https://img.shields.io/travis/aar0nTw/CaBot.svg)]() [![Coveralls](https://img.shields.io/coveralls/aar0nTw/CaBot.svg)]()
+[![license](https://img.shields.io/github/license/aar0nTw/CaBot.svg)]() [![Build Status](https://travis-ci.org/aar0nTw/CaBot.svg?branch=master)](https://travis-ci.org/aar0nTw/CaBot) [![Coverage Status](https://coveralls.io/repos/github/aar0nTw/CaBot/badge.svg?branch=master)](https://coveralls.io/github/aar0nTw/CaBot?branch=master)
 
 
 ## Resources
