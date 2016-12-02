@@ -33,7 +33,7 @@ class Youtube
   end
 
   def get_youtube_results(keyword)
-    uri =  URI("#{Youtube::YOUTUB_API_URI}&q=#{keyword}")
+    uri =  URI("#{Youtube::YOUTUB_API_URI}&q=#{URI.escape(keyword)}")
     response = Net::HTTP.get uri
     JSON.parse(response)
   end
