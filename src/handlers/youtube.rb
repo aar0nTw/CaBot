@@ -43,7 +43,7 @@ class Youtube
 
       resp.push({
         type: :text,
-        text: "#{title}\n#{description}\n#{video_path}\n"
+        text: "(lightbulb) #{video_path}\n\n (headphones) #{title}\n\n (cinema) #{description}\n\n"
       })
     else
       resp.push({
