@@ -23,7 +23,7 @@ class Youtube
     if video
       kind = video['id']['kind']
       snippet = video['snippet']
-      thumbnail = snippet['thumbnails']['medium']['url']
+      thumbnail = snippet['thumbnails']['high']['url']
       title = snippet['title']
       description = snippet['description']
       case kind
