@@ -40,4 +40,4 @@ class Youtube
 
 end
 
-Cabot::Core::CommandProcessor.register_rule(Stock::PATTERN, Stock)
+Cabot::Core::CommandProcessor.register_rule(Youtube::PATTERN, Youtube)
