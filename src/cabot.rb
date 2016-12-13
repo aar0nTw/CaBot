@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'cabot/cabot'
 # Plug-in require
-%w(nba fy av stock dice youtube, currency).each do |plugin|
+%w(nba fy av stock dice youtube currency).each do |plugin|
   require File.dirname(__FILE__) + "/handlers/#{plugin}.rb"
 end
 
